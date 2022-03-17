@@ -5,6 +5,7 @@ Arduino sketches to pass sensor data between two Artemis's via BLE.
 
 Documentation
 --------------
+* **[Arduino Reference Language: ArduinoBLE](https://www.arduino.cc/reference/en/libraries/arduinoble/)**
 * **[Getting Started with the MyoWare® 2.0 Muscle Sensor Ecosystem](https://learn.sparkfun.com/tutorials/1956)** - Basic hookup guide for the MyoWare 2.0 ecosystem.
 
 License Information
