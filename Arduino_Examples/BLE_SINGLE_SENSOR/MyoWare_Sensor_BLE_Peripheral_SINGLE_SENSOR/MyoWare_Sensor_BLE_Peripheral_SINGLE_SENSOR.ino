@@ -1,14 +1,14 @@
 /*
-  MyoWare Sensor BLE Peripheral SINGLE SENSOR example
+  MyoWare Sensor BLE Peripheral SINGLE SENSOR Example
   SparkFun Electronics
   Pete Lewis
   3/17/2022
 
-  This example reads a single MyoWare Muscle Sensor, and then gets that data from this Artemis Redboard 
-  (the Peripheral) to a second Redboard Artemis (the Central) over BLE.
+  This example reads a single MyoWare Muscle Sensor, and then gets that data from this RedBoard Artemis 
+  (the peripheral) to a second RedBoard Artemis (the central) over BLE.
 
   This Artemis, aka the "BLE Peripheral", will read the sensor on A0.
-  It will then update the value to the "bluetooth bulliten board".
+  It will then update the value to the "bluetooth bulletin board."
 
   Note, in BLE, you have services, characteristics and values.
   Read more about it here:
@@ -30,14 +30,14 @@
   Note, both the service and the characteristic get unique UUIDs 
   (even though they are extremely close to being the same thing in this example)
   
-  The second Artemis, aka the "BLE Central", will subscribe to the first board's 
-  charactieristic, and check to see if the value has been updated. When it has been 
+  The second Artemis, aka the "BLE Central," will subscribe to the first board's 
+  characteristic, and check to see if the value has been updated. When it has been 
   updated, it will print the value to the serial terminal.
 
   Hardware:
   MyoWare Sensor with Link Shield snapped on top.
-  TRS cable from Link shield to A0 port of Arduino Shield.
-  Arduino Shield pressed into Artemis Redboard.
+  TRS cable from Link Shield to A0 port of Arduino Shield.
+  Arduino Shield pressed into RedBoard Artemis.
   USB from Artemis to Computer.
 
   This example code is in the public domain.
@@ -56,7 +56,7 @@ const int ledPin = LED_BUILTIN; // pin to use for the LED
 void setup() 
 {
   Serial.begin(115200);
-  while (!Serial);
+  while (!Serial); // Wait for Serial Monitor to open for Processors with Native USB such as the SAMD21/SAMD51
   Serial.println("MyoWare Single Sensor Example - BLE Peripheral");
 
   pinMode(ledPin, OUTPUT); // set LED pin to output mode

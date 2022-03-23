@@ -1,11 +1,11 @@
 /*
-  MyoWare Receiver BLE Central SINGLE SENSOR example
+  MyoWare Receiver BLE Central SINGLE SENSOR Example
   SparkFun Electronics
   Pete Lewis
   3/17/2022
 
-  This example sets up a SparkFun Artemis Redboard as a BLE Central device,
-  Then, it connects to a second Artemis Peripheral Device that is reading a single MyoWare
+  This example sets up a SparkFun RedBoard Artemis as a BLE central device,
+  Then, it connects to a second Artemis peripheral device that is reading a single MyoWare
   Muscle sensor. It then streams the data on the Serial Terminal.
   
   Note, in BLE, you have services, characteristics and values.
@@ -17,22 +17,22 @@
   It first sets up some BLE stuff:
     1. sets up as a central
     2. scans for any peripherals
-    3. Connects to the device named "MAYOWARE1"
+    3. Connects to the device named "MYOWARE1"
     4. Subscribes MYOWARE1's data characteristic
 
   In order for this example to work, you will need a second Artemis, and it will
   need to be programmed with the provided code specific to being a peripheral device, 
-  and advertizing as MYOWARE1 with the specific characteristic UUID.
+  and advertising as MYOWARE1 with the specific characteristic UUID.
 
   Note, both the service and the characteristic get unique UUIDs 
   (even though they are extremely close to being the same thing in this example)
   
-  This Artemis, aka the "BLE Central", will subscribe to the peripheral board's 
-  charactieristic, and check to see if the value has been updated. When it has been 
+  This Artemis, aka the "BLE Central," will subscribe to the peripheral board's 
+  characteristic, and check to see if the value has been updated. When it has been 
   updated, it will print the value to the serial terminal.
 
   Hardware:
-  SparkFun Artemis Redboard
+  SparkFun RedBoard Artemis
   USB from Artemis to Computer.
   
   This example code is in the public domain.
@@ -43,7 +43,7 @@
 void setup() 
 {
   Serial.begin(115200);
-  while (!Serial);
+  while (!Serial); // Wait for Serial Monitor to open for Processors with Native USB such as the SAMD21/SAMD51
   Serial.println("MyoWare Single Sensor Example - BLE Central");
 
   if (!BLE.begin()) // initialize the BLE hardware
