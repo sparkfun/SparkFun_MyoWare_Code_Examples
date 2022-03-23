@@ -1,14 +1,15 @@
 /*
-  MyoWare Sensor BLE Peripheral SINGLE SENSOR example
+  MyoWare Sensor BLE Peripheral MULTI SENSOR example
   SparkFun Electronics
   Pete Lewis
-  3/17/2022
+  3/23/2022
 
-  This example reads a single MyoWare Muscle Sensor, and then gets that data from this Artemis Redboard 
+  This example reads 4 MyoWare Muscle Sensors, and then gets that data from this Artemis Redboard 
   (the Peripheral) to a second Redboard Artemis (the Central) over BLE.
 
-  This Artemis, aka the "BLE Peripheral", will read the sensor on A0.
-  It will then update the value to the "bluetooth bulliten board".
+  This Artemis, aka the "BLE Peripheral", will read the sensor on A0-A3.
+  It will then store them in a single 32-bit variable, and then
+  update that value to the "bluetooth bulliten board".
 
   Note, in BLE, you have services, characteristics and values.
   Read more about it here:
@@ -32,11 +33,12 @@
   
   The second Artemis, aka the "BLE Central", will subscribe to the first board's 
   charactieristic, and check to see if the value has been updated. When it has been 
-  updated, it will print the value to the serial terminal.
+  updated, it will read it, parse it into 4 separate bytes, then print the values 
+  to the serial terminal.
 
   Hardware:
-  MyoWare Sensor with Link Shield snapped on top.
-  TRS cable from Link shield to A0 port of Arduino Shield.
+  4 MyoWare Sensors, each with a Link Shield snapped on top.
+  TRS cables from Link shields to Analog ports (A0-A3) of Arduino Shield.
   Arduino Shield pressed into Artemis Redboard.
   USB from Artemis to Computer.
 
@@ -57,7 +59,7 @@ void setup()
 {
   Serial.begin(115200);
   while (!Serial);
-  Serial.println("MyoWare Single Sensor Example - BLE Peripheral");
+  Serial.println("MyoWare Multi Sensor Example - BLE Peripheral");
 
   pinMode(ledPin, OUTPUT); // set LED pin to output mode
 

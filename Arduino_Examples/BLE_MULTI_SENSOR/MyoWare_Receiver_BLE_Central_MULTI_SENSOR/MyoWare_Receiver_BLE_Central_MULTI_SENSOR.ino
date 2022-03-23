@@ -1,12 +1,12 @@
 /*
-  MyoWare Receiver BLE Central SINGLE SENSOR example
+  MyoWare Receiver BLE Central MULTI SENSOR example
   SparkFun Electronics
   Pete Lewis
-  3/17/2022
+  3/23/2022
 
   This example sets up a SparkFun Artemis Redboard as a BLE Central device,
-  Then, it connects to a second Artemis Peripheral Device that is reading a single MyoWare
-  Muscle sensor. It then streams the data on the Serial Terminal.
+  Then, it connects to a second Artemis Peripheral Device that is reading multiple MyoWare
+  Muscle sensors. It then streams the data on the Serial Terminal.
 
   Note, in BLE, you have services, characteristics and values.
   Read more about it here:
@@ -31,6 +31,10 @@
   charactieristic, and check to see if the value has been updated. When it has been
   updated, it will print the value to the serial terminal.
 
+  Note, the value that this CEntral Device will read is acutally a uint32_t 
+  (aka "unsigned long" in arduino). This single variable will carry all of the 
+  sensor values, stored as 4 bytes within it.
+
   Hardware:
   SparkFun Artemis Redboard
   USB from Artemis to Computer.
@@ -50,7 +54,7 @@ void setup()
 {
   Serial.begin(115200);
   while (!Serial);
-  Serial.println("MyoWare Single Sensor Example - BLE Central");
+  Serial.println("MyoWare Multi Sensor Example - BLE Central");
 
   if (!BLE.begin()) // initialize the BLE hardware
   {
@@ -151,7 +155,7 @@ void checkUpdate(BLEDevice peripheral)
     if (dataCharacteristic.valueUpdated()) // Check to see if the value of the characteristic has been updated
     {
       uint32_t received_val = 0;
-      dataCharacteristic.readValue(received_val); // note, "readValue(uint32_t& value)" needs to be passed by reference
+      dataCharacteristic.readValue(received_val); // note, "readValue(uint32_t& value)" needs the variable to be passed by reference
 
       // parse received_val - this contains all 4 of our ADC values (as each byte)
       val_A0_byte = (received_val & 0x000000FF);
@@ -159,7 +163,7 @@ void checkUpdate(BLEDevice peripheral)
       val_A2_byte = ((received_val & 0x00FF0000) >> 16);
       val_A3_byte = ((received_val & 0xFF000000) >> 24);
 
-      //Serial.print(received_val, HEX);
+      //Serial.print(received_val, HEX); // optional print of the entire uint32_t for debugging
       //Serial.print("\t");
       Serial.print(val_A0_byte);
       Serial.print("\t");

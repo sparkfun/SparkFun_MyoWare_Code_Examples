@@ -145,7 +145,7 @@ void checkUpdate(BLEDevice peripheral)
     if (dataCharacteristic.valueUpdated()) // Check to see if the value of the characteristic has been updated
     {
       byte received_val = 0;
-      dataCharacteristic.readValue(received_val); // note, readValue returns nothing, and needs the value as a pointer/argument
+      dataCharacteristic.readValue(received_val); // note, readValue returns nothing, and needs the variable to be passed by reference
       Serial.println(received_val);
     }
     delay(1);
