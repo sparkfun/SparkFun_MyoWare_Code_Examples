@@ -7,10 +7,10 @@
   This example sets up a SparkFun Artemis Redboard as a BLE Central device,
   Then, it connects to a second Artemis Peripheral Device that is reading a single MyoWare
   Muscle sensor. It then streams the data on the Serial Terminal.
-  
+
   Note, in BLE, you have services, characteristics and values.
   Read more about it here:
-  
+
   https://www.arduino.cc/reference/en/libraries/arduinoble/
 
   Note, before it begins checking the data and printing it,
@@ -21,33 +21,39 @@
     4. Subscribes MYOWARE1's data characteristic
 
   In order for this example to work, you will need a second Artemis, and it will
-  need to be programmed with the provided code specific to being a peripheral device, 
+  need to be programmed with the provided code specific to being a peripheral device,
   and advertizing as MYOWARE1 with the specific characteristic UUID.
 
-  Note, both the service and the characteristic get unique UUIDs 
+  Note, both the service and the characteristic get unique UUIDs
   (even though they are extremely close to being the same thing in this example)
-  
-  This Artemis, aka the "BLE Central", will subscribe to the peripheral board's 
-  charactieristic, and check to see if the value has been updated. When it has been 
+
+  This Artemis, aka the "BLE Central", will subscribe to the peripheral board's
+  charactieristic, and check to see if the value has been updated. When it has been
   updated, it will print the value to the serial terminal.
 
   Hardware:
   SparkFun Artemis Redboard
   USB from Artemis to Computer.
-  
+
   This example code is in the public domain.
 */
 
 #include <ArduinoBLE.h>
 
-void setup() 
+// global variables to store each sensor values as bytes (0-255)
+uint8_t val_A0_byte = 0;
+uint8_t val_A1_byte = 0;
+uint8_t val_A2_byte = 0;
+uint8_t val_A3_byte = 0;
+
+void setup()
 {
   Serial.begin(115200);
   while (!Serial);
   Serial.println("MyoWare Single Sensor Example - BLE Central");
 
   if (!BLE.begin()) // initialize the BLE hardware
-  { 
+  {
     Serial.println("starting BLE failed!");
     while (1);
   }
@@ -56,7 +62,7 @@ void setup()
   BLE.scanForUuid("19b10000-e8f2-537e-4f6c-d104768a1214"); // start scanning for peripherals
 }
 
-void loop() 
+void loop()
 {
   BLEDevice peripheral = BLE.available(); // check if a peripheral has been discovered
 
@@ -88,11 +94,11 @@ void loop()
 // Connect to peripheral
 // Then continue to check if the data has been updated,
 // If so, print it to terminal
-void checkUpdate(BLEDevice peripheral) 
+void checkUpdate(BLEDevice peripheral)
 {
   Serial.println("Connecting ..."); // connect to the peripheral
 
-  if (peripheral.connect()) 
+  if (peripheral.connect())
   {
     Serial.println("Connected");
   } else {
@@ -101,7 +107,7 @@ void checkUpdate(BLEDevice peripheral)
   }
 
   Serial.println("Discovering attributes ..."); // discover peripheral attributes
-  if (peripheral.discoverAttributes()) 
+  if (peripheral.discoverAttributes())
   {
     Serial.println("Attributes discovered");
   } else {
@@ -113,27 +119,27 @@ void checkUpdate(BLEDevice peripheral)
   // retrieve the data characteristic
   BLECharacteristic dataCharacteristic = peripheral.characteristic("19b10001-e8f2-537e-4f6c-d104768a1214");
 
-  if (!dataCharacteristic) 
+  if (!dataCharacteristic)
   {
     Serial.println("Peripheral does not have that characteristic!");
     peripheral.disconnect();
     return;
-  } else if (!dataCharacteristic.canWrite()) 
+  } else if (!dataCharacteristic.canWrite())
   {
     Serial.println("Peripheral does not have a writable characteristic!");
     peripheral.disconnect();
     return;
-  } else if (!dataCharacteristic.canRead()) 
+  } else if (!dataCharacteristic.canRead())
   {
     Serial.println("Peripheral does not have a readable characteristic!");
     peripheral.disconnect();
     return;
-  } else if (!dataCharacteristic.canSubscribe()) 
+  } else if (!dataCharacteristic.canSubscribe())
   {
     Serial.println("Characteristic is not subscribable!");
     peripheral.disconnect();
     return;
-  } else if (!dataCharacteristic.subscribe()) 
+  } else if (!dataCharacteristic.subscribe())
   {
     Serial.println("subscription failed!");
     peripheral.disconnect();
@@ -144,9 +150,24 @@ void checkUpdate(BLEDevice peripheral)
   {
     if (dataCharacteristic.valueUpdated()) // Check to see if the value of the characteristic has been updated
     {
-      byte received_val = 0;
-      dataCharacteristic.readValue(received_val); // note, readValue returns nothing, and needs the value as a pointer/argument
-      Serial.println(received_val);
+      uint32_t received_val = 0;
+      dataCharacteristic.readValue(received_val); // note, "readValue(uint32_t& value)" needs to be passed by reference
+
+      // parse received_val - this contains all 4 of our ADC values (as each byte)
+      val_A0_byte = (received_val & 0x000000FF);
+      val_A1_byte = ((received_val & 0x0000FF00) >> 8);
+      val_A2_byte = ((received_val & 0x00FF0000) >> 16);
+      val_A3_byte = ((received_val & 0xFF000000) >> 24);
+
+      //Serial.print(received_val, HEX);
+      //Serial.print("\t");
+      Serial.print(val_A0_byte);
+      Serial.print("\t");
+      Serial.print(val_A1_byte);
+      Serial.print("\t");
+      Serial.print(val_A2_byte);
+      Serial.print("\t");
+      Serial.println(val_A3_byte);
     }
     delay(1);
   }

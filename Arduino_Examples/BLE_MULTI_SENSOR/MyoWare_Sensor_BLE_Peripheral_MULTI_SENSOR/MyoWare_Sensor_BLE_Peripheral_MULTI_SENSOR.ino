@@ -49,7 +49,7 @@ BLEService sensorDataService("19b10000-e8f2-537e-4f6c-d104768a1214"); // BLE Ser
 
 // BLE Data Characteristic - custom 128-bit UUID, readable, writable and subscribable by central
 // Note, "BLENotify" is what makes it subscribable
-BLEByteCharacteristic dataCharacteristic("19b10001-e8f2-537e-4f6c-d104768a1214", BLERead | BLEWrite | BLENotify); 
+BLEUnsignedLongCharacteristic dataCharacteristic("19b10001-e8f2-537e-4f6c-d104768a1214", BLERead | BLEWrite | BLENotify); 
 
 const int ledPin = LED_BUILTIN; // pin to use for the LED
 
@@ -89,10 +89,26 @@ void loop()
     // while the central is still connected to peripheral:
     while (central.connected()) 
     {
-      int val_int = analogRead(A0); // Read the sensor attached to Analog Pin A0
-      byte val_byte = map(val_int, 0, 1023, 0, 255); // map the int to a byte
+      uint16_t val_A0 = analogRead(A0); // Read the sensor attached to Analog Pin A0
+      uint16_t val_A1 = analogRead(A1); // Read the sensor attached to Analog Pin A1
+      uint16_t val_A2 = analogRead(A2); // Read the sensor attached to Analog Pin A2
+      uint16_t val_A3 = analogRead(A3); // Read the sensor attached to Analog Pin A3
+
+      uint8_t val_A0_byte = map(val_A0, 0, 1023, 0, 255); // map the int to a byte
+      uint8_t val_A1_byte = map(val_A1, 0, 1023, 0, 255); // map the int to a byte
+      uint8_t val_A2_byte = map(val_A2, 0, 1023, 0, 255); // map the int to a byte
+      uint8_t val_A3_byte = map(val_A3, 0, 1023, 0, 255); // map the int to a byte
+      
+      uint32_t output = 0; // output value (this will contain all 4 of our data bytes)
+
+      // "OR" in all of our data bytes
+      output |= val_A0_byte;
+      output |= (val_A1_byte << 8);
+      output |= (val_A2_byte << 16);
+      output |= (val_A3_byte << 24);
+      
       delay(10);
-      dataCharacteristic.writeValue(val_byte); // "post" to "BLE bulletin board"
+      dataCharacteristic.writeValue(output); // "post" to "BLE bulletin board"
       // Note, because our second Artemis in this example (the central) is subscribed to this characteristic,
       // it can simply call Characteristic.valueUpdated() to see if it has been updated.
       // valueUpdated() will return True if updated, or false if no update has happened.
