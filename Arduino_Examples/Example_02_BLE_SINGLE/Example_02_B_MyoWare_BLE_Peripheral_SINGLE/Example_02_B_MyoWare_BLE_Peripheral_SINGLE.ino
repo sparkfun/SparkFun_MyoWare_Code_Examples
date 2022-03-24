@@ -56,7 +56,7 @@ const int ledPin = LED_BUILTIN; // pin to use for the LED
 void setup() 
 {
   Serial.begin(115200);
-  while (!Serial); // Wait for Serial Monitor to open for Processors with Native USB such as the SAMD21/SAMD51
+  while (!Serial); // optionally wait for serial terminal to open, useful with micros that have native USB
   Serial.println("MyoWare Single Sensor Example - BLE Peripheral");
 
   pinMode(ledPin, OUTPUT); // set LED pin to output mode
