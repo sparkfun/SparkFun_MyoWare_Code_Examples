@@ -58,7 +58,7 @@ const int ledPin = LED_BUILTIN; // pin to use for the LED
 void setup() 
 {
   Serial.begin(115200);
-  while (!Serial);
+  // while (!Serial); // optionally wait for a serial terminal to open
   Serial.println("MyoWare Multi Sensor Example - BLE Peripheral");
 
   pinMode(ledPin, OUTPUT); // set LED pin to output mode
@@ -104,10 +104,10 @@ void loop()
       uint32_t output = 0; // output value (this will contain all 4 of our data bytes)
 
       // "OR" in all of our data bytes
-      output |= val_A0_byte;
-      output |= (val_A1_byte << 8);
-      output |= (val_A2_byte << 16);
-      output |= (val_A3_byte << 24);
+      output |= val_A0_byte;            // ----  ----  ----  ----  ----  ----  XXXX  XXXX
+      output |= (val_A1_byte << 8);     // ----  ----  ----  ----  XXXX  XXXX  ----  ----
+      output |= (val_A2_byte << 16);    // ----  ----  XXXX  XXXX  ----  ----  ----  ----
+      output |= (val_A3_byte << 24);    // XXXX  XXXX  ----  ----  ----  ----  ----  ----
       
       delay(10);
       dataCharacteristic.writeValue(output); // "post" to "BLE bulletin board"

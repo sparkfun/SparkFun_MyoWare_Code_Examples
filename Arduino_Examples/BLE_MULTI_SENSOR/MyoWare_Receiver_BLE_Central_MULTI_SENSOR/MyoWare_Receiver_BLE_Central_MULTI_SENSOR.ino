@@ -53,7 +53,7 @@ uint8_t val_A3_byte = 0;
 void setup()
 {
   Serial.begin(115200);
-  while (!Serial);
+  // while (!Serial); // optionally wait for serial terminal to open
   Serial.println("MyoWare Multi Sensor Example - BLE Central");
 
   if (!BLE.begin()) // initialize the BLE hardware
