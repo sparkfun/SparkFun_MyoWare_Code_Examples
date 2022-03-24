@@ -1,7 +1,7 @@
-SparkFun_MyoWare_BLE_Arduino_Examples
+SparkFun_MyoWare_Arduino_Examples
 ========================================
 
-Arduino sketches to pass sensor data between two Artemis's via BLE.
+Arduino sketches for MyoWare Muscle Sensors. Wired and BLE examples included.
 
 Documentation
 --------------
