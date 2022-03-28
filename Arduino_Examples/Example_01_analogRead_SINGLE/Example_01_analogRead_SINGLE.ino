@@ -1,14 +1,14 @@
 /*
-  MyoWare Example 01 Wired - single sensor
+  MyoWare Example_01_analogRead_SINGLE
   SparkFun Electronics
   Pete Lewis
   3/24/2022
   License: This code is public domain but you buy me a beverage if you use this and we meet someday.
-
   This code was adapted from the MyoWare analogReadValue.ino example found here:
   https://github.com/AdvancerTechnologies/MyoWare_MuscleSensor
 
   This example streams the data from a single MyoWare sensor attached to ADC A0.
+  Graphical representation is available using Serial Plotter (Tools > Serial Plotter menu).
 
   *Only run on a laptop using its battery. Do not plug in laptop charger/dock/monitor.
   
@@ -26,7 +26,7 @@ void setup()
 {
   Serial.begin(115200);
   while (!Serial); // optionally wait for serial terminal to open
-  Serial.println("MyoWare Single Sensor Example 01");
+  Serial.println("MyoWare Example_01_analogRead_SINGLE");
 }
 
 void loop() 

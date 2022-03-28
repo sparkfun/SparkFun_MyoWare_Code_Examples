@@ -42,6 +42,15 @@
   Arduino Shield pressed into Artemis Redboard.
   USB from Artemis to Computer.
 
+  ** For consistent BT connection follow these steps:
+  ** 1. Reset Peripheral
+  ** 2. Wait 5 seconds
+  ** 3. Reset Central
+  ** 4. Enjoy BT connection
+  **
+  ** ArduinoBLE does not support RE-connecting two devices.
+  ** If you loose connection, you must follow this hardware reset sequence again.
+
   This example code is in the public domain.
 */
 
