@@ -7,7 +7,7 @@ SparkFun MyoWare Code Examples
    <td width="50%"><a href="https://cdn.sparkfun.com/assets/learn_tutorials/1/9/5/6/MyoWareArtemisBluetoothCentralOutput_Plotter1.gif"><img src="https://cdn.sparkfun.com/assets/learn_tutorials/1/9/5/6/MyoWareArtemisBluetoothCentralOutput_Plotter1.gif" alt="Arduino ENV Output"></a></td>
   </tr>
   <tr align="center">
-   <td><i>Arduino Bluetooth® Setup</i></td>
+   <td><i>Arduino Bluetooth® Peripheral and Central Setup</i></td>
    <td><i>Arduino Central Device and ENV Output</i></td>
   </tr>
 </table>
