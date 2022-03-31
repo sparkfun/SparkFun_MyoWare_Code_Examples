@@ -1,1 +1,1 @@
-Python Code examples. Tested on the SparkFun RP2040 Thing Plus.
+Python code examples. Tested on the SparkFun Pro Micro RP2040 using Raspberry Pi's MicroPython environment.
