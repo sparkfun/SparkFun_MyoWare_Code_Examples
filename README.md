@@ -1,7 +1,7 @@
-SparkFun_MyoWare_Arduino_Examples
+SparkFun_MyoWare_Code_Examples
 ========================================
 
-Arduino sketches for MyoWare Muscle Sensors. Wired and BLE examples included.
+Arduino and Python examples for MyoWare Muscle Sensors. Wired and BLE examples included.
 
 Documentation
 --------------
