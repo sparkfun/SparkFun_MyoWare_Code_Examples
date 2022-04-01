@@ -12,7 +12,7 @@ SparkFun MyoWare Code Examples
   </tr>
 </table>
 
-Arduino and Python examples for MyoWare Muscle Sensors. Wired and BLE examples included.
+Arduino, Python, and MakeCode examples to read the MyoWare 2.0 Muscle Sensors. Wired and BLE Arduino examples included.
 
 Documentation
 --------------
